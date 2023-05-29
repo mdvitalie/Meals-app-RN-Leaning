@@ -1,25 +1,32 @@
-import { View, Text, Image, StyleSheet, ScrollView, Button } from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import { useLayoutEffect } from "react";
 import React from "react";
 import { MEALS } from "../data/dummy-data";
 import MealDetails from "../components/MealDetails";
 import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
+import IconButton from "../components/IconButton";
 
 const MealsDetailScreen = ({ route, navigation }) => {
   const mealId = route.params.mealId;
 
   const seletedMeal = MEALS.find((meal) => meal.id === mealId);
 
-  function headerButtonPressHandler () {
+  function headerButtonPressHandler() {
     console.log("Pressed Button!");
   }
 
-  useLayoutEffect(()=>{
+  useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: ()=>{
-        return <Button title='Tap me!' onPress={headerButtonPressHandler}/>
-      }
+      headerRight: () => {
+        return (
+          <IconButton
+            icon="star"
+            color="#fff"
+            onPress={headerButtonPressHandler}
+          />
+        );
+      },
     });
   }, [navigation, headerButtonPressHandler]);
 
@@ -51,7 +58,7 @@ const MealsDetailScreen = ({ route, navigation }) => {
 export default MealsDetailScreen;
 
 const styles = StyleSheet.create({
-  rootContainer:{
+  rootContainer: {
     marginBottom: 32,
   },
   image: {
@@ -68,8 +75,8 @@ const styles = StyleSheet.create({
   detailText: {
     color: "#fff",
   },
-  listOuterContainer:{
-    alignItems: "center"
+  listOuterContainer: {
+    alignItems: "center",
   },
   listContainer: {
     width: "80%",
