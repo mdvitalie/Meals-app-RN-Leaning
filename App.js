@@ -8,7 +8,9 @@ import MealsDetailScreen from "./screens/MealsDetailScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import FavoritesScreen from "./screens/FavoritesScreen";
 import { Ionicons } from "@expo/vector-icons";
-import FavoritesContextProvider from "./store/context/favorites-context";
+import { Provider } from "react-redux";
+// import FavoritesContextProvider from "./store/context/favorites-context";
+import { store } from "./store/redux/store";
 
 const Drawer = createDrawerNavigator();
 
@@ -40,7 +42,7 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name="Favorites"
         component={FavoritesScreen}
-        options={{          
+        options={{
           drawerIcon: ({ color, size }) => (
             <Ionicons name="star" color={color} size={size} />
           ),
@@ -54,44 +56,45 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <FavoritesContextProvider>
-
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: { backgroundColor: "#351401" },
-            headerTintColor: "#fff",
-            contentStyle: { backgroundColor: "#3f2f25" },
-          }}
-        >
-          <Stack.Screen
-            name="Drawer"
-            //name="MealsCategories"
-            //component={CategoriesScreen}
-            component={DrawerNavigator}
-            options={{
-              //title: "All Categories",
-              headerShown: false,
+      {/* <FavoritesContextProvider> */}
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: { backgroundColor: "#351401" },
+              headerTintColor: "#fff",
+              contentStyle: { backgroundColor: "#3f2f25" },
             }}
-          />
-          <Stack.Screen
-            name="MealsOverview"
-            component={MealsOverViewScreen}
-            // options={({route, navigation}) => {
-            //  const catId = route.params.categoryId;
-            //  return{
-            //    title: catId,
-            //  }
-            //}}
-          />
-          <Stack.Screen
-            name="MealDetail"
-            component={MealsDetailScreen}
-            options={{ title: "About the meal" }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-      </FavoritesContextProvider>
+          >
+            <Stack.Screen
+              name="Drawer"
+              //name="MealsCategories"
+              //component={CategoriesScreen}
+              component={DrawerNavigator}
+              options={{
+                //title: "All Categories",
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="MealsOverview"
+              component={MealsOverViewScreen}
+              // options={({route, navigation}) => {
+              //  const catId = route.params.categoryId;
+              //  return{
+              //    title: catId,
+              //  }
+              //}}
+            />
+            <Stack.Screen
+              name="MealDetail"
+              component={MealsDetailScreen}
+              options={{ title: "About the meal" }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
+      {/* </FavoritesContextProvider> */}
     </>
   );
 }
